@@ -11,10 +11,10 @@ import {
   fetchMultipleMintInfos,
   getATAAddress,
   getMultipleAccountsInfoWithCustomFlags,
-} from "@/common";
+} from "../../common";
 import { AccountLayout, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { MakeMultiTxData, MakeTxData } from "@/common/txTool/txTool";
-import { TxVersion } from "@/common/txTool/txType";
+import { MakeMultiTxData, MakeTxData } from "../../common/txTool/txTool";
+import { TxVersion } from "../../common/txTool/txType";
 import { toApiV3Token, toFeeConfig } from "../../raydium/token/utils";
 import { ComputeBudgetConfig, ReturnTypeFetchMultipleMintInfos } from "../../raydium/type";
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
@@ -1651,9 +1651,9 @@ export class Clmm extends ModuleBase {
   }
 
   public async getRpcClmmPoolInfos({
-    poolIds,
-    config,
-  }: {
+                                     poolIds,
+                                     config,
+                                   }: {
     poolIds: (string | PublicKey)[];
     config?: { batchRequest?: boolean; chunkCount?: number };
   }): Promise<{
@@ -1665,11 +1665,11 @@ export class Clmm extends ModuleBase {
       config,
     );
     const returnData: {
-      [poolId: string]: ClmmRpcData;
+      [poolId: string]: ClmmRpcData &{slot:number};
     } = {};
     for (let i = 0; i < poolIds.length; i++) {
       const item = accounts[i];
-      if (item === null || !item.accountInfo) throw Error("fetch pool info error: " + String(poolIds[i]));
+      if (item === null || !item.accountInfo) throw Error("fetch cache_data info error: " + String(poolIds[i]));
       const rpc = PoolInfoLayout.decode(item.accountInfo.data);
       const currentPrice = SqrtPriceMath.sqrtPriceX64ToPrice(
         rpc.sqrtPriceX64,
@@ -1681,6 +1681,7 @@ export class Clmm extends ModuleBase {
         ...rpc,
         currentPrice,
         programId: item.accountInfo.owner,
+        slot:item.accountInfo['slot']
       };
     }
     return returnData;

@@ -17,7 +17,7 @@ import {
   TickArrayBitmapExtensionType,
 } from "../type";
 
-import { ApiV3PoolInfoConcentratedItem, ApiV3Token } from "@/api/type";
+import { ApiV3PoolInfoConcentratedItem, ApiV3Token } from "../../../api/type";
 
 import Decimal from "decimal.js";
 import {
@@ -26,9 +26,9 @@ import {
   getTransferAmountFeeV2,
   minExpirationTime,
   solToWSol,
-} from "@/common";
-import { Percent, Price, Token, TokenAmount } from "@/module";
-import { TokenAccountRaw } from "@/raydium/account/types";
+} from "../../../common";
+import { Percent, Price, Token, TokenAmount } from "../../../module";
+import { TokenAccountRaw } from "../../../raydium/account/types";
 import { PoolInfoLayout, PositionInfoLayout, TickArrayBitmapExtensionLayout, TickArrayLayout } from "../layout";
 import { MAX_SQRT_PRICE_X64, MAX_TICK, MIN_SQRT_PRICE_X64, MIN_TICK, NEGATIVE_ONE, Q64, ZERO } from "./constants";
 import { LiquidityMath, MathUtil, SqrtPriceMath, SwapMath } from "./math";

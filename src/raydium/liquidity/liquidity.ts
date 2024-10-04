@@ -7,12 +7,12 @@ import {
   FormatFarmInfoOutV6,
 } from "../../api/type";
 import { AccountLayout, NATIVE_MINT, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { getMultipleAccountsInfoWithCustomFlags } from "@/common/accountInfo";
-import { BN_ZERO, divCeil } from "@/common/bignumber";
-import { getATAAddress } from "@/common/pda";
-import { BNDivCeil } from "@/common/transfer";
-import { MakeMultiTxData, MakeTxData } from "@/common/txTool/txTool";
-import { InstructionType, TxVersion } from "@/common/txTool/txType";
+import { getMultipleAccountsInfoWithCustomFlags } from "../../common/accountInfo";
+import { BN_ZERO, divCeil } from "../../common/bignumber";
+import { getATAAddress } from "../../common/pda";
+import { BNDivCeil } from "../../common/transfer";
+import { MakeMultiTxData, MakeTxData } from "../../common/txTool/txTool";
+import { InstructionType, TxVersion } from "../../common/txTool/txType";
 import { Percent, Token, TokenAmount } from "../../module";
 import {
   FARM_PROGRAM_TO_VERSION,
@@ -52,7 +52,7 @@ import { getAssociatedConfigId, getAssociatedPoolKeys, toAmmComputePoolInfo } fr
 
 import BN from "bn.js";
 import Decimal from "decimal.js";
-import { WSOLMint } from "@/common";
+import { WSOLMint } from "../../common";
 
 export default class LiquidityModule extends ModuleBase {
   public stableLayout: StableLayout;
@@ -1089,18 +1089,19 @@ export default class LiquidityModule extends ModuleBase {
       poolIds.map((i) => ({ pubkey: new PublicKey(i) })),
       config,
     );
-    const poolInfos: { [poolId: string]: ReturnType<typeof liquidityStateV4Layout.decode> & { programId: PublicKey } } =
+    const poolInfos: { [poolId: string]: ReturnType<typeof liquidityStateV4Layout.decode> & { programId: PublicKey }&{slot:number} } =
       {};
 
     const needFetchVaults: PublicKey[] = [];
 
     for (let i = 0; i < poolIds.length; i++) {
       const item = accounts[i];
-      if (item === null || !item.accountInfo) throw Error("fetch pool info error: " + String(poolIds[i]));
+      if (item === null || !item.accountInfo) throw Error("fetch cache_data info error: " + String(poolIds[i]));
       const rpc = liquidityStateV4Layout.decode(item.accountInfo.data);
       poolInfos[String(poolIds[i])] = {
         ...rpc,
         programId: item.accountInfo.owner,
+        slot:item.accountInfo['slot']
       };
 
       needFetchVaults.push(rpc.baseVault, rpc.quoteVault);

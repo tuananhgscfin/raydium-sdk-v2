@@ -1,12 +1,12 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { MintLayout, RawMint, TOKEN_PROGRAM_ID, TransferFeeConfigLayout } from "@solana/spl-token";
-import { BigNumberish } from "@/common/bignumber";
+import { BigNumberish } from "../../common/bignumber";
 import { Token, TokenAmount } from "../../module";
 import { SOL_INFO, TOKEN_WSOL } from "./constant";
 import { TokenInfo } from "./type";
 
 import { ApiV3Token } from "../../api";
-import { solToWSol } from "@/common";
+import { solToWSol } from "../../common";
 
 export const parseTokenInfo = async ({
   connection,

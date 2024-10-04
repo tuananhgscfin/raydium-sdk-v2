@@ -13,18 +13,18 @@ import {
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 
-import { FormatFarmKeyOut } from "@/api/type";
-import { parseBigNumberish } from "@/common";
-import { createLogger } from "@/common/logger";
-import { getATAAddress } from "@/common/pda";
+import { FormatFarmKeyOut } from "../../api/type";
+import { parseBigNumberish } from "../../common";
+import { createLogger } from "../../common/logger";
+import { getATAAddress } from "../../common/pda";
 import {
   accountMeta,
   commonSystemAccountMeta,
   INSTRUCTION_PROGRAM_ID,
   RENT_PROGRAM_ID,
   SOLMint,
-} from "@/common/pubKey";
-import { InstructionType } from "@/common/txTool/txType";
+} from "../../common/pubKey";
+import { InstructionType } from "../../common/txTool/txType";
 import { bool, struct, u32, u64, u8 } from "../../marshmallow";
 import { InstructionReturn } from "../type";
 import { poolTypeV6 } from "./config";

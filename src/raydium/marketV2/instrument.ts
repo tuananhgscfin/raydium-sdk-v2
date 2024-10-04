@@ -9,7 +9,7 @@ import {
 } from "@solana/web3.js";
 import BN from "bn.js";
 import { createInitializeAccountInstruction, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { InstructionType } from "@/common/txTool/txType";
+import { InstructionType } from "../../common/txTool/txType";
 import { struct, u16, u32, u64, u8 } from "../../marshmallow";
 import { MARKET_STATE_LAYOUT_V2 } from "./layout";
 

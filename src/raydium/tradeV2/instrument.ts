@@ -8,7 +8,7 @@ import {
   MEMO_PROGRAM_ID2,
   accountMeta,
   jsonInfo2PoolKeys,
-} from "@/common";
+} from "../../common";
 import { seq, struct, u128, u64, u8 } from "../../marshmallow";
 import {
   ClmmInstrument,

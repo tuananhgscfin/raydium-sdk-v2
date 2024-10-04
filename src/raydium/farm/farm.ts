@@ -1,15 +1,15 @@
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { createAssociatedTokenAccountInstruction } from "@solana/spl-token";
-import { parseBigNumberish } from "@/common";
+import { parseBigNumberish } from "../../common";
 
 import { FormatFarmKeyOut } from "../../api/type";
-import { AddInstructionParam, jsonInfo2PoolKeys } from "@/common";
-import { BN_ZERO } from "@/common/bignumber";
-import { getATAAddress } from "@/common/pda";
-import { FARM_PROGRAM_ID_V6 } from "@/common/programId";
-import { SOLMint, WSOLMint } from "@/common/pubKey";
-import { MakeMultiTxData, MakeTxData } from "@/common/txTool/txTool";
-import { InstructionType, TxVersion } from "@/common/txTool/txType";
+import { AddInstructionParam, jsonInfo2PoolKeys } from "../../common";
+import { BN_ZERO } from "../../common/bignumber";
+import { getATAAddress } from "../../common/pda";
+import { FARM_PROGRAM_ID_V6 } from "../../common/programId";
+import { SOLMint, WSOLMint } from "../../common/pubKey";
+import { MakeMultiTxData, MakeTxData } from "../../common/txTool/txTool";
+import { InstructionType, TxVersion } from "../../common/txTool/txType";
 import { generatePubKey } from "../account/util";
 
 import Decimal from "decimal.js";

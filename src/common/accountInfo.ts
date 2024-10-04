@@ -29,7 +29,7 @@ export async function getMultipleAccountsInfo(
   connection: Connection,
   publicKeys: PublicKey[],
   config?: GetMultipleAccountsInfoConfig,
-): Promise<(AccountInfo<Buffer> | null)[]> {
+): Promise<any> {
   const {
     batchRequest,
     commitment = "confirmed",
@@ -40,7 +40,7 @@ export async function getMultipleAccountsInfo(
   };
 
   const chunkedKeys = chunkArray(publicKeys, chunkCount);
-  let results: (AccountInfo<Buffer> | null)[][] = new Array(chunkedKeys.length).fill([]);
+  let results: any = new Array(chunkedKeys.length).fill([]);
 
   if (batchRequest) {
     const batch = chunkedKeys.map((keys) => {
@@ -80,8 +80,8 @@ export async function getMultipleAccountsInfo(
   } else {
     try {
       results = (await Promise.all(
-        chunkedKeys.map((keys) => connection.getMultipleAccountsInfo(keys, commitment)),
-      )) as (AccountInfo<Buffer> | null)[][];
+        chunkedKeys.map((keys) => connection.getMultipleAccountsInfoAndContext(keys, commitment)),
+      ));
     } catch (error) {
       if (error instanceof Error) {
         logger.logWithError(`failed to get info for multiple accounts, RPC_ERROR, ${error.message}`);
@@ -102,8 +102,17 @@ export async function getMultipleAccountsInfoWithCustomFlags<T extends { pubkey:
     publicKeysWithCustomFlag.map((o) => o.pubkey),
     config,
   );
+  const multipleAccountsInfoParsed:any = []
+  for (const accountInfo of multipleAccountsInfo) {
+    const accInfo = accountInfo.value
+    const slot = accountInfo.context.slot
+    for (const item of accInfo) {
+      item.slot = slot
+      multipleAccountsInfoParsed.push(item)
+    }
+  }
 
-  return publicKeysWithCustomFlag.map((o, idx) => ({ ...o, accountInfo: multipleAccountsInfo[idx] }));
+  return publicKeysWithCustomFlag.map((o, idx) => ({ ...o, accountInfo: multipleAccountsInfoParsed[idx] }));
 }
 
 export enum AccountType {

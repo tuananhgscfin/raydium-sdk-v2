@@ -1,17 +1,17 @@
 import { PublicKey } from "@solana/web3.js";
 import { ApiV3PoolInfoStandardItemCpmm, CpmmKeys } from "../../api/type";
 import { AccountLayout, NATIVE_MINT, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { BN_ZERO } from "@/common/bignumber";
-import { getATAAddress } from "@/common/pda";
-import { WSOLMint } from "@/common/pubKey";
-import { MakeTxData } from "@/common/txTool/txTool";
-import { InstructionType, TxVersion } from "@/common/txTool/txType";
+import { BN_ZERO } from "../../common/bignumber";
+import { getATAAddress } from "../../common/pda";
+import { WSOLMint } from "../../common/pubKey";
+import { MakeTxData } from "../../common/txTool/txTool";
+import { InstructionType, TxVersion } from "../../common/txTool/txType";
 import { Percent } from "../../module";
 import { CurveCalculator } from "./curve/calculator";
 
 import BN from "bn.js";
 import Decimal from "decimal.js";
-import { fetchMultipleMintInfos, getMultipleAccountsInfoWithCustomFlags, getTransferAmountFeeV2 } from "@/common";
+import { fetchMultipleMintInfos, getMultipleAccountsInfoWithCustomFlags, getTransferAmountFeeV2 } from "../../common";
 import { GetTransferAmountFee, ReturnTypeFetchMultipleMintInfos } from "../../raydium/type";
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import { toApiV3Token, toFeeConfig } from "../token";
@@ -62,18 +62,20 @@ export default class CpmmModule extends ModuleBase {
       this.scope.connection,
       poolIds.map((i) => ({ pubkey: new PublicKey(i) })),
     );
-    const poolInfos: { [poolId: string]: ReturnType<typeof CpmmPoolInfoLayout.decode> & { programId: PublicKey } } = {};
+    console.log('account',accounts[0])
+    const poolInfos: { [poolId: string]: ReturnType<typeof CpmmPoolInfoLayout.decode> & { programId: PublicKey } & {slot:number} } = {};
 
     const needFetchConfigId = new Set<string>();
     const needFetchVaults: PublicKey[] = [];
 
     for (let i = 0; i < poolIds.length; i++) {
       const item = accounts[i];
-      if (item.accountInfo === null) throw Error("fetch pool info error: " + String(poolIds[i]));
+      if (item.accountInfo === null) throw Error("fetch cache_data info error: " + String(poolIds[i]));
       const rpc = CpmmPoolInfoLayout.decode(item.accountInfo.data);
       poolInfos[String(poolIds[i])] = {
         ...rpc,
         programId: item.accountInfo.owner,
+        slot:item.accountInfo['slot']
       };
       needFetchConfigId.add(String(rpc.configId));
 
@@ -91,7 +93,7 @@ export default class CpmmModule extends ModuleBase {
 
       for (let i = 0; i < configIds.length; i++) {
         const configItemInfo = configState[i].accountInfo;
-        if (configItemInfo === null) throw Error("fetch pool config error: " + configIds[i]);
+        if (configItemInfo === null) throw Error("fetch cache_data config error: " + configIds[i]);
         configInfo[configIds[i]] = CpmmConfigInfoLayout.decode(configItemInfo.data);
       }
     }

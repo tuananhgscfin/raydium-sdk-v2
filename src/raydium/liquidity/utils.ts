@@ -8,7 +8,7 @@ import {
   parseSimulateLogToJson,
   parseSimulateValue,
   simulateMultipleInstruction,
-} from "@/common/txTool/txUtils";
+} from "../../common/txTool/txUtils";
 import { toApiV3Token } from "../../raydium/token/utils";
 import { makeSimulatePoolInfoInstruction } from "./instruction";
 import { getSerumAssociatedAuthority } from "./serum";

@@ -1,6 +1,6 @@
 import { Connection, Keypair, PublicKey, Signer, SystemProgram, TransactionInstruction } from "@solana/web3.js";
 import BN from "bn.js";
-import { ApiV3PoolInfoConcentratedItem, ApiV3Token, ClmmKeys } from "@/api/type";
+import { ApiV3PoolInfoConcentratedItem, ApiV3Token, ClmmKeys } from "../../api/type";
 import {
   InstructionType,
   MEMO_PROGRAM_ID,
@@ -10,9 +10,9 @@ import {
   createLogger,
   getATAAddress,
   parseBigNumberish,
-} from "@/common";
+} from "../../common";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { bool, s32, struct, u128, u64, u8 } from "@/marshmallow";
+import { bool, s32, struct, u128, u64, u8 } from "../../marshmallow";
 import { ClmmPositionLayout, ObservationInfoLayout } from "./layout";
 import {
   ClmmPoolPersonalPosition,

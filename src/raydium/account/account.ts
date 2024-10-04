@@ -1,12 +1,12 @@
 import { Commitment, PublicKey, SystemProgram, TransactionInstruction } from "@solana/web3.js";
-import { BigNumberish, getATAAddress, InstructionType, WSOLMint } from "@/common";
+import { BigNumberish, getATAAddress, InstructionType, WSOLMint } from "../../common";
 import {
   AccountLayout,
   createAssociatedTokenAccountInstruction,
   TOKEN_PROGRAM_ID,
   TOKEN_2022_PROGRAM_ID,
 } from "@solana/spl-token";
-import { AddInstructionParam } from "@/common/txTool/txTool";
+import { AddInstructionParam } from "../../common/txTool/txTool";
 
 import ModuleBase, { ModuleBaseProps } from "../moduleBase";
 import {

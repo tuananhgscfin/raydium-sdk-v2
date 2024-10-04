@@ -2,7 +2,7 @@ import { EpochInfo, PublicKey } from "@solana/web3.js";
 import { createTransferInstruction, TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import BN from "bn.js";
 import Decimal from "decimal.js";
-import { AmmV4Keys, ApiV3Token, ClmmKeys, PoolKeys } from "@/api";
+import { AmmV4Keys, ApiV3Token, ClmmKeys, PoolKeys } from "../../api";
 import {
   AMM_V4,
   BigNumberish,
@@ -14,9 +14,9 @@ import {
   parseBigNumberish,
   solToWSol,
   WSOLMint,
-} from "@/common";
-import { MakeMultiTxData, MakeTxData } from "@/common/txTool/txTool";
-import { InstructionType, TxVersion } from "@/common/txTool/txType";
+} from "../../common";
+import { MakeMultiTxData, MakeTxData } from "../../common/txTool/txTool";
+import { InstructionType, TxVersion } from "../../common/txTool/txType";
 import { publicKey, struct } from "../../marshmallow";
 import { Price, TokenAmount } from "../../module";
 import { ClmmRpcData, ComputeClmmPoolInfo, PoolUtils, ReturnTypeFetchMultiplePoolTickArrays } from "../../raydium/clmm";
