@@ -31,7 +31,6 @@ export class PoolInfo{
         sqrt_price_x64:parseInt(poolInfo.sqrtPriceX64.toString()),
         tick_array_bitmap:poolInfo.tickArrayBitmap.toString(),
         pool_price:poolInfo.currentPrice,
-        slot:poolInfo.slot
       }
     }
     const poolState = {
@@ -41,5 +40,3 @@ export class PoolInfo{
     return poolState
   }
 }
-const pool = new PoolInfo();
-pool.getPoolInfoWithSlot('3nMFwZXwY1s1M5s8vYAHqd4wGs4iSxXE4LRoUMMYqEgF','clmm')
